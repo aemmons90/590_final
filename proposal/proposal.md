@@ -4,7 +4,7 @@ Project Participants:** Alexandra Emmons, Matt Tuttle, and Samantha Coy
 
 **Project Type:** Package
 
-**Git Workflow:** Central Workflow
+**Git Workflow:** Integration Manager Workflow
 
 **Project Description:**
 
