@@ -7,10 +7,8 @@
 #' @examples
 #' load_biorad2("my_data.csv")
 #' load_biorad2("./data/my_data.csv")
+#' @import tidyverse
 #' @export
-
-# Loads the tidyverse packages which are required for this function to work
-library(tidyverse)
 
 # Imports the file as a tibble so that package tools can easily be used on it
 load_biorad2 <- function(datafile) {
@@ -22,6 +20,3 @@ load_biorad2 <- function(datafile) {
     select(Sample = Description, Copies = copies)
   return(selected_data)
 }
-
-#Included to test the function
-test <- load_biorad2("./testingdata/BioRad2_sample_qPCR_data.csv")
