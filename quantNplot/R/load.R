@@ -1,8 +1,10 @@
 
+#' load
+#'
+#' @import tidyverse
 #function requires the following
 library(tidyverse)
 library(dplyr)
-
 
 #' @export
 #file input = quantification cq results as a .csv file from a CFX BioRad Instrument
@@ -13,10 +15,10 @@ load_bioradcfx <- function(file){
   quant<-select(raw_data, Sample, Cq, Starting.Quantity=Starting.Quantity..SQ.)
   quant<-filter(quant, !is.na(Cq))
   return(quant)
-}
+  }
 
-#Example
 x <-load_bioradcfx("C:/Users/Alexandra Emmons/Dropbox/590_final/test.csv")
+
 
 
 
