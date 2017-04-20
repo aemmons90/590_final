@@ -1,7 +1,12 @@
 #' load_quantmasterviia7
 #' 
+#' Imports raw qPCR data from a QuantMaster Viaa7 Instrument, converts it to a smaller tibble containing Sample Name and Quantity
+#' 
 #' @param file The qPCR output (.csv) from a QuantMasterViiA7 Instrument
-#' @return Returns a dataframe containing only relevant information
+#' @return Returns a tibble for next step, normalization
+#' 
+#' @examples 
+#' load_quantmasterviia7("jenny2_qPCR.csv")
 #' 
 #' @import tidyverse
 
@@ -11,7 +16,7 @@ library(dplyr)
 
 #' @export
 #Takes the qPCR output (.csv) from a QuantMasterViiA7 qPCR machine.
-#Replicate data should have the same identity under `Sample Name` and labeled UNKNOWN under Task columns
+#Sample data should be labeled UNKNOWN under Task columns, and replicates should have the same identity under `Sample Name`
 load_quantmasterviia7 <- function(file){
   #Reads file, skips to the row containing the header (Well, Well Position, ....)
   Rawfile <- read.csv(file, skip = 32, check.names = FALSE)
@@ -24,4 +29,4 @@ load_quantmasterviia7 <- function(file){
 }
 
 #Test the function with a file
-a <- load_quantmasterviia7("Courses/GEOL_590/data/Jenny2_qPCR.csv")
+a <- load_quantmasterviia7("~/Courses/GEOL_590/data/Jenny2_qPCR.csv")
