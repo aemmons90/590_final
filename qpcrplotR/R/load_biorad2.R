@@ -25,7 +25,7 @@ load_biorad2 <- function(datafile) {
     select(Sample = Description, Copies = copies) %>%
     group_by(Sample) %>%
     mutate(Mean = mean(Copies)) %>%
-    mutate(Standard.deviation = sd(Copies)) %>%
+    mutate(SD = sd(Copies)) %>%
     ungroup() %>%
     arrange(Sample)
 
