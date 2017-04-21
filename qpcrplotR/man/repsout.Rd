@@ -17,7 +17,7 @@ A data frame including Sample, Mean.Copies, and SD after removing outliers.
 \description{
 This function takes a data frame and evaluates each technical replicate by the standard deviation
 to eliminate outliers. Outliers can be removed based on any inputed number of standard
-deviations. For example, if x is set to 1, than only values within one standard deviation
+deviations. For example, if x is set to 1, then only values within one standard deviation
 of the mean will be included in the data set. This gives the user control over outlier removal.
 }
 \examples{
