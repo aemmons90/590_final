@@ -4,7 +4,7 @@
 \alias{repsout}
 \title{Remove outliers}
 \usage{
-repsout(df, x)
+repsout(df, x = 1)
 }
 \arguments{
 \item{df}{a data frame}

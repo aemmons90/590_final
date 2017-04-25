@@ -13,7 +13,7 @@
 #' quant2<-repsout(quant, 2)
 #' quant3<-repsout(quant, 1)
 #' @export
-repsout<- function(df, x){
+repsout<- function(df, x=1){
 quant1<- df %>%
     dplyr::filter(Copies, SD!= 0 & Copies < (Mean + x*SD) & Copies > (Mean - x*SD)) %>%
     dplyr::select(Sample, Copies) %>%
