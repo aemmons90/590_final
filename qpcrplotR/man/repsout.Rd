@@ -21,6 +21,6 @@ deviations. For example, if x is set to 1, then only values within one standard 
 of the mean will be included in the data set. This gives the user control over outlier removal.
 }
 \examples{
-quant2<-repsout(quant, 2)
-quant3<-repsout(quant, 1)
+repsout(quant, 2)
+repsout(quant, 1)
 }

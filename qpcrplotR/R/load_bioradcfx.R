@@ -7,11 +7,11 @@
 #' download properly.
 #'
 #'
-#'@param the file Path in quotes
-#'@return A tibble table of the input file. This inlcudes columns with the sample designation, starting quantity (copy number), mean, and standard deviation.
-#'@example
+#' @param the file Path in quotes
+#' @return A tibble table of the input file. This inlcudes columns with the sample designation, starting quantity (copy number), mean, and standard deviation.
+#' @example
 #' load_bioradcfx("./example.csv")
-#'@export
+#' @export
 load_bioradcfx <- function(file){
   raw_data<- read.csv(file, header=TRUE, check.names = TRUE)
   raw_data<-tibble::as_tibble(raw_data)

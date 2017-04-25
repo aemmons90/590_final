@@ -4,7 +4,7 @@
 #' used in each pcr reaction and the dilution factor. Both the pipetted quantity (x) and
 #' dilution factor (y) are user defined and the default is set to 1 (indicating no dilution). The dilution factor
 #' argument should not be modified if only a subset of samples were diluted; instead, use
-#' the function subdil() prior to this function.
+#' the function norm_sd() prior to this function.
 #'
 #' @param df a data frame
 #' @param x a numeric value
@@ -12,9 +12,9 @@
 #' @return A data frame including Sample, Mean.Copies.ul, and SD after correcting for pippet volume and dilutions.
 #'
 #' @examples
-#' pipdil(quant2, 2, 10)
+#' norm_pd(quant2, 2, 10)
 #' @export
-pipdil <- function(df, x, y){
+norm_pd <- function(df, x, y){
   df[["Mean.Copies"]] <- (df[["Mean.Copies"]]/x)*y
   df[["SD"]] <- (df[["SD"]]/x)*y
   colnames(df) <- c("Sample", "Mean.Copies.ul", "SD")

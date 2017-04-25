@@ -8,10 +8,9 @@
 #' @param df a data frame
 #' @param x a numeric value
 #' @return A data frame including Sample, Mean.Copies, and SD after removing outliers.
-#'
 #' @examples
-#' quant2<-repsout(quant, 2)
-#' quant3<-repsout(quant, 1)
+#' repsout(quant, 2)
+#' repsout(quant, 1)
 #' @export
 repsout<- function(df, x=1){
 quant1<- df %>%

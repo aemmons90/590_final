@@ -11,12 +11,15 @@
 #'
 #' @examples
 #' x<-c('1101-0001|1101-0002|1101-0003')
-#' subdil(quant1, x, 10)
+#' norm_sd(quant1, x, 10)
 #' @export
-subdil<-function(df, row.names=x, y=1){
+norm_sd<-function(df, row.names=x, y){
   quant<-dplyr::filter(df, grepl(x, Sample))
   quant[["Mean.Copies"]] <- (quant[["Mean.Copies"]]*y)
   quant[["SD"]] <- (quant[["SD"]]*y)
   df[["Mean.Copies"]][match(quant[["Sample"]],df[["Sample"]])] <- quant[["Mean.Copies"]]
+  df[["SD"]][match(quant[["Sample"]],df[["Sample"]])] <- quant[["SD"]]
   return(df)
 }
+
+
