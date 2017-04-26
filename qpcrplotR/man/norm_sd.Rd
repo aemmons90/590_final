@@ -4,7 +4,7 @@
 \alias{norm_sd}
 \title{Normalize a subset of samples by the dilution factor}
 \usage{
-norm_sd(df, row.names = x, y)
+norm_sd(df, row.names = x, y = 1, z = 1)
 }
 \arguments{
 \item{df}{a data frame}
@@ -18,8 +18,11 @@ A data frame including Sample, Mean.Copies, and SD after correcting for dilution
 }
 \description{
 This function takes a data frame and normalizes a subset of Mean.Copies by the dilution factor.
+This function must be used after repsout.
 The dilution factor (y) is user defined and the default is set to 1 (indicating no dilution).
 A vector including Samples that were diluted needs to be created prior to using this function.
+This function also normalizes based on the pipette volume. Therefore, there is no need to use
+norm_pd following this function.
 }
 \examples{
 x<-c('1101-0001|1101-0002|1101-0003')

@@ -4,7 +4,7 @@
 \alias{norm_pd}
 \title{Normalize by Pipette volume and dilution factor}
 \usage{
-norm_pd(df, x, y)
+norm_pd(df, x = 1, y = 1)
 }
 \arguments{
 \item{df}{a data frame}
@@ -18,10 +18,11 @@ A data frame including Sample, Mean.Copies.ul, and SD after correcting for pippe
 }
 \description{
 This function takes a data frame and normalizes Mean.Copies by the amount of extract
-used in each pcr reaction and the dilution factor. Both the pipetted quantity (x) and
-dilution factor (y) are user defined and the default is set to 1 (indicating no dilution). The dilution factor
-argument should not be modified if only a subset of samples were diluted; instead, use
-the function norm_sd() prior to this function.
+used in each pcr reaction and the dilution factor. This function can only be used following
+repsout(). Both the pipetted quantity (x) and the dilution factor (y) are user defined and
+the default is set to 1 (indicating no dilution). The dilution factor argument should not be
+modified if only a subset of samples were diluted; instead, use the function norm_sd() prior
+to this function.
 }
 \examples{
 norm_pd(quant2, 2, 10)

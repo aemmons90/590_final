@@ -27,7 +27,7 @@ copies of DNA in the elution volume. y can then be used to normalize copy number
 unit of mass or volume of the input material for the DNA extraction. For example, if DNA was
 extracted from 0.25g of soil, y would equal 0.25, and the resulting normalization would be
 mean copies per gram of soil; Z is used to define these final units and name the resulting column.
-This function should only be used after norm_pd.
+This function should only be used after norm_pd or norm_sd.
 }
 \examples{
 norm_biom(quant2, 100, 0.25, "Mean.Copies/g")
