@@ -1,15 +1,16 @@
-#' Normalize a subset of samples by the dilution factor
+#' Normalize a subset of samples by the dilution factor and the entire set by pipette volume
 #'
 #' This function takes a data frame and normalizes a subset of Mean.Copies by the dilution factor.
 #' This function must be used after repsout.
 #' The dilution factor (y) is user defined and the default is set to 1 (indicating no dilution).
 #' A vector including Samples that were diluted needs to be created prior to using this function.
-#' This function also normalizes based on the pipette volume. Therefore, there is no need to use
+#' This function also normalizes based on the pipette volume (z) per PCR reaction. Therefore, there is no need to use
 #' norm_pd following this function.
 #'
 #' @param df a data frame
 #' @param x a numeric value
 #' @param y a numeric value
+#' @param z a numeric value
 #' @return A data frame including Sample, Mean.Copies, and SD after correcting for dilutions.
 #' @import dplyr
 #' @examples
