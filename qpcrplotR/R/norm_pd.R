@@ -4,8 +4,7 @@
 #' used in each pcr reaction and the dilution factor. This function can only be used following
 #' repsout(). Both the pipetted quantity (x) and the dilution factor (y) are user defined and
 #' the default is set to 1 (indicating no dilution). The dilution factor argument should not be
-#' modified if only a subset of samples were diluted; instead, use the function norm_sd() prior
-#' to this function.
+#' modified if only a subset of samples were diluted; instead, use the function norm_sd().
 #'
 #' @param df a data frame
 #' @param x a numeric value
