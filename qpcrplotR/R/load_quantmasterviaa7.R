@@ -29,12 +29,12 @@ load_quantmasterviia7 <- function(file){
   Newfile <- tibble::as_tibble(select(Rawfile, Sample.Name, Task, Quantity, Quantity.Mean, Quantity.SD)) %>%
     #Extracts the rows containing sample data
     filter(Task == "UNKNOWN") %>%
+    filter(!is.na(Quantity.Mean)) %>%
     #Selects the columns of interest in the sample data
     select(Sample.Name, Quantity, Quantity.Mean, Quantity.SD) %>%
     #Groups the replicates together
     group_by(Sample.Name)
-  colnames(Newfile) <- c("Sample", "Copies","Mean","SD") %>%
-    na.exclude(Mean)
+  colnames(Newfile) <- c("Sample", "Copies","Mean","SD")
 return(Newfile)
 }
 
