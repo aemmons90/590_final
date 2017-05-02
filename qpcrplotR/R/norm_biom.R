@@ -23,7 +23,8 @@ norm_biom<- function(df, x=1, y=1, z){
   df[[z]] <- ((df[["Mean.Copies.ul"]]*x)/y)
   df[["Mean.Copies.ul"]]<- NULL
   df[["SD"]] <- ((df[["SD"]]*x)/y)
-  return(df)
+  df2<-df[ ,c(1, 3, 2)]
+  return(df2)
 }
 
 
