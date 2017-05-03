@@ -2,11 +2,11 @@ Package: qpcrplotR
 Title: Normalizes and Plots qPCR Data
 Version: 0.0.0.9000
 Authors@R: c(person("Alexandra", "Emmons", email = "aemmons@vols.utk.edu", role = c("aut", "cre")),
-	person("First", "Last", email = "first.last@example.com", role = c("aut")),
+	person("Matthew", "Tuttle", email = "mtuttle4@vols.utk.edu", role = c("aut")),
 	person("First", "Last", email = "first.last@example.com", role = c("aut")))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.3.2)
-License: What license is it under?
+License: CC0
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
@@ -14,4 +14,6 @@ Imports: dplyr (>= 0.5.0),
     tibble (>= 1.2),
 	magrittr (>= 1.5),
 	ggplot2 (>= 2.2.1)
-
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
