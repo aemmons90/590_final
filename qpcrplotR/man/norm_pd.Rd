@@ -7,7 +7,7 @@
 norm_pd(df, x = 1, y = 1)
 }
 \arguments{
-\item{df}{a data frame}
+\item{df}{a data frame resulting from repsout()}
 
 \item{x}{a numeric value, equal to the pipetted quantity}
 

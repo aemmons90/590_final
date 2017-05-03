@@ -10,7 +10,7 @@
 #' mean copies per gram of soil; Z is used to define these final units and name the resulting column.
 #' This function should only be used after norm_pd or norm_sd.
 #'
-#' @param df a data frame
+#' @param df a data frame resulting from either norm_pd() or norm_sd()
 #' @param x a numeric value, equal to elution volume
 #' @param y a numeric value, equal to biomass input
 #' @param z a new column name; include in quotes

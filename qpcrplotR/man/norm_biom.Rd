@@ -7,7 +7,7 @@
 norm_biom(df, x = 1, y = 1, z)
 }
 \arguments{
-\item{df}{a data frame}
+\item{df}{a data frame resulting from either norm_pd() or norm_sd()}
 
 \item{x}{a numeric value, equal to elution volume}
 

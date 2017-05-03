@@ -7,7 +7,7 @@
 norm_sd(df, row.names = x, y = 1, z = 1)
 }
 \arguments{
-\item{df}{a data frame}
+\item{df}{a data frame resulting from repsout()}
 
 \item{y}{a numeric value}
 

@@ -6,7 +6,7 @@
 #' the default is set to 1 (indicating no dilution). The dilution factor argument should not be
 #' modified if only a subset of samples were diluted; instead, use the function norm_sd().
 #'
-#' @param df a data frame
+#' @param df a data frame resulting from repsout()
 #' @param x a numeric value, equal to the pipetted quantity
 #' @param y a numeric value, equal to the dilution factor
 #' @return A data frame including Sample, Mean.Copies.ul, and SD after correcting for pipette volume and dilutions.

@@ -5,7 +5,7 @@
 #' deviations. For example, if x is set to 1, then only values within one standard deviation
 #' of the mean will be included in the data set. This gives the user control over outlier removal.
 #'
-#' @param df a data frame
+#' @param df a data frame created from any of the following: load_biorad2(), load_bioradcfx(),load_quantmasterviaa7()
 #' @param x a numeric value
 #' @return A data frame including Sample, Mean.Copies, and SD after removing outliers.
 #' @examples

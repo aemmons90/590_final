@@ -9,7 +9,7 @@ meta_merge(file, df)
 \arguments{
 \item{file}{a specified comma delimited file containing metadata associated with qPCR Sample data}
 
-\item{df}{a data frame including qPCR data}
+\item{df}{a data frame including qPCR data following normalization}
 }
 \value{
 A merged data frame including combined qPCR and metadata

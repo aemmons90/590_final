@@ -7,7 +7,7 @@
 repsout(df, x = 1)
 }
 \arguments{
-\item{df}{a data frame}
+\item{df}{a data frame created from any of the following: load_biorad2(), load_bioradcfx(),load_quantmasterviaa7()}
 
 \item{x}{a numeric value}
 }
