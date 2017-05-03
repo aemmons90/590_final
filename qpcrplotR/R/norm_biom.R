@@ -11,9 +11,9 @@
 #' This function should only be used after norm_pd or norm_sd.
 #'
 #' @param df a data frame
-#' @param x a numeric value
-#' @param y a numeric value
-#' @param z a column name; include in quotes
+#' @param x a numeric value, equal to elution volume
+#' @param y a numeric value, equal to biomass input
+#' @param z a new column name; include in quotes
 #' @return A data frame including Sample, Mean.Copies, and SD after correcting for total elution volume and biomass input.
 #'
 #' @examples

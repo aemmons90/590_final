@@ -7,9 +7,9 @@
 #' modified if only a subset of samples were diluted; instead, use the function norm_sd().
 #'
 #' @param df a data frame
-#' @param x a numeric value
-#' @param y a numeric value
-#' @return A data frame including Sample, Mean.Copies.ul, and SD after correcting for pippet volume and dilutions.
+#' @param x a numeric value, equal to the pipetted quantity
+#' @param y a numeric value, equal to the dilution factor
+#' @return A data frame including Sample, Mean.Copies.ul, and SD after correcting for pipette volume and dilutions.
 #' @examples
 #' norm_pd(quant2, 2, 10)
 #' @export
