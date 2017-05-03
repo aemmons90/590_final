@@ -38,6 +38,8 @@ print(my_data)
 
 ```
 
+The data above is measuring copy number of a methionine aminopeptidase gene (map for short). It does so for three different strains of *Sulfitobacter*. These strains are *Sulfitobacter* sp. CB-D, *Sulfitobacter* sp. CB-A, and *Sulfitobacter* sp. CB-AD. In addition to the three strains, this dataset is also looking at gene copy in each strain at three different stages of growth in batch culture: mid-log phase (log), early stationary phase (early), and late stationary phase (late).
+
 #### A quick note
 
 If you wanted to include metadata associated with your samples in addition to the data above, you may do so using the `meta_merge()` function. However, this BioRad2 example dataset does not have any associated metadata, so we will not be using this function in this vignette. If you want to know more you can feel free to read the `meta_merge` documentation or check out some of the other vignettes.
@@ -53,11 +55,11 @@ Once data has been loaded using a load function, there are a variety of differen
 |`norm_pd()`   | Normalizes data by Pipette volume and dilution factor |
 |`norm_sd()`   | Normalizes a subset of samples by the dilution factor and the entire set by pipette volume |
 
-For our BioRad2 data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and normalize it to biomass input. Removing outliers using `repsout()` only requires the dataframe created from our original load function. The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 50 fold. Therefore we will use the values 2 and 50 for these arguments. We do this as follows:
+For our BioRad2 data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and normalize it to biomass input. Removing outliers using `repsout()` only requires the dataframe created from our original load function. The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 10-fold. Therefore we will use the values 2 and 10 for these arguments. We do this as follows:
 
 ```{r}
 my_data_without_outliers <- repsout(my_data)
-my_normalized_data <- norm_pd(my_data_without_outliers, 2, 50)
+my_normalized_data <- norm_pd(my_data_without_outliers, 2, 10)
 ```
 
 ## Plotting data
