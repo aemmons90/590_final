@@ -11,6 +11,8 @@
 #' @examples
 #' repsout(quant, 2)
 #' repsout(quant, 1)
+#' @import dplyr
+#' @import magrittr
 #' @export
 repsout<- function(df, x=1){
 quant1<- df %>%
