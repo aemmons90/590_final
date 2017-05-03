@@ -24,17 +24,25 @@
 #Sample data should be labeled UNKNOWN under Task columns, and replicates should have the same identity under `Sample Name`
 load_quantmasterviia7 <- function(file){
   #Reads file, skips to the row containing the header, and removes spaces
-  Rawfile <- read.csv(file, skip = 32, check.names = TRUE, na.strings = c("","NA"))
+  Rawfile <- read.csv(file, skip = 32, 
+                      check.names = TRUE, 
+                      na.strings = c("","NA"))
+
   #Converts the dataframe to a tibble and selects important columns
   Newfile <- tibble::as_tibble(select(Rawfile, Sample.Name, Task, Quantity, Quantity.Mean, Quantity.SD)) %>%
     #Extracts the rows containing sample data
     filter(Task == "UNKNOWN") %>%
     filter(!is.na(Quantity.Mean)) %>%
     #Selects the columns of interest in the sample data
-    select(Sample.Name, Quantity, Quantity.Mean, Quantity.SD) %>%
-    #Groups the replicates together
-    group_by(Sample.Name)
+    select(Sample.Name, Quantity, Quantity.Mean, Quantity.SD)
+  
+  #Re-name columns in standard output
   colnames(Newfile) <- c("Sample", "Copies","Mean","SD")
+  
+  #Convert factor classes to numeric for algebraic downstream functions
+  Newfile$Copies <- as.numeric(gsub(",","", Newfile$Copies))
+  Newfile$Mean <- as.numeric(gsub(",","", Newfile$Mean))
+  Newfile$SD <- as.numeric(gsub(",","", Newfile$SD))
 return(Newfile)
 }
 
