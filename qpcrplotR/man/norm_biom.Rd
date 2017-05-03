@@ -7,13 +7,13 @@
 norm_biom(df, x = 1, y = 1, z)
 }
 \arguments{
-\item{df}{a data frame}
+\item{df}{a data frame resulting from either norm_pd() or norm_sd()}
 
-\item{x}{a numeric value}
+\item{x}{a numeric value, equal to elution volume}
 
-\item{y}{a numeric value}
+\item{y}{a numeric value, equal to biomass input}
 
-\item{z}{a column name; include in quotes}
+\item{z}{a new column name; include in quotes}
 }
 \value{
 A data frame including Sample, Mean.Copies, and SD after correcting for total elution volume and biomass input.

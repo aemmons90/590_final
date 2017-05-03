@@ -7,14 +7,14 @@
 norm_pd(df, x = 1, y = 1)
 }
 \arguments{
-\item{df}{a data frame}
+\item{df}{a data frame resulting from repsout()}
 
-\item{x}{a numeric value}
+\item{x}{a numeric value, equal to the pipetted quantity}
 
-\item{y}{a numeric value}
+\item{y}{a numeric value, equal to the dilution factor}
 }
 \value{
-A data frame including Sample, Mean.Copies.ul, and SD after correcting for pippet volume and dilutions.
+A data frame including Sample, Mean.Copies.ul, and SD after correcting for pipette volume and dilutions.
 }
 \description{
 This function takes a data frame and normalizes Mean.Copies by the amount of extract

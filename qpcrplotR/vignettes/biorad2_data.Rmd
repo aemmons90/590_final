@@ -1,0 +1,81 @@
+---
+title: "Working with qPCR data from a BioRad2 machine"
+author: "Matthew Tuttle"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{biorad2_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(qpcrplotR)
+
+```
+
+This vignette documents how data from a BioRad2 qPCR machine may be analyzed by the R package *qpcrplotR*. In this vignette you will learn how to load data output from the qPCR machine, normalize data, and plot your data for visualization.
+
+Most of this information may also be found throughout the R documentation. This vignette merely serves as an example workflow to introduce or refresh users on how to utilize the *qpcrplotR* package and some of its associated functions.
+
+## Loading data
+
+Given that qPCR machines do not export data in a standard format after a run, the *qpcrplotR* package provides several different load functions depending on what format your data is in. These different load functions all transform your raw data into *qpcrplotR*'s standard format as a dataframe. This is done so that other functions you may want to use for quality control or normalization of your data work as they are intended. It also allows user to be able to analyze data from different machines using the same workflow.
+
+In this vignette we will be working with data from a BioRad2 qPCR machine. The load function for this type of data is `load_biorad2()`.
+
+Here is a quick example of how data is imported with this function:
+
+```{r}
+my_data <- load_biorad2("../data/map.csv")
+
+```
+
+This results in a dataframe that looks like the one below. Here you can see sample names and measured copy number are imported. The import function also automatically calculates means and standard deviations by sample type. Remember that in order to perform statistical analysis on your data you need to have at least three replicates per sample.
+
+```{r}
+print(my_data)
+
+```
+
+The data above is measuring copy number of a methionine aminopeptidase gene (map for short). It does so for three different strains of *Sulfitobacter*. These strains are *Sulfitobacter* sp. CB-D, *Sulfitobacter* sp. CB-A, and *Sulfitobacter* sp. CB-AD. In addition to the three strains, this dataset is also looking at gene copy in each strain at three different stages of growth in batch culture: mid-log phase (log), early stationary phase (early), and late stationary phase (late).
+
+#### A quick note
+
+If you wanted to include metadata associated with your samples in addition to the data above, you may do so using the `meta_merge()` function. However, this BioRad2 example dataset does not have any associated metadata, so we will not be using this function in this vignette. If you want to know more you can feel free to read the `meta_merge` documentation or check out some of the other vignettes.
+
+## Data quality control and normalization
+
+Once data has been loaded using a load function, there are a variety of different functions that may be used for data quality control and normalization of data. Here is table of these functions with some brief descriptions:
+
+| Function     | Description |
+|:------------:|:------------|
+|`repsout()`   | Removes outliers from dataset |
+|`norm_biom()` | Normalizes data by extraction elution volume and biomass input |
+|`norm_pd()`   | Normalizes data by Pipette volume and dilution factor |
+|`norm_sd()`   | Normalizes a subset of samples by the dilution factor and the entire set by pipette volume |
+
+For our BioRad2 data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and normalize it to biomass input. Removing outliers using `repsout()` only requires the dataframe created from our original load function. The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 10-fold. Therefore we will use the values 2 and 10 for these arguments. We do this as follows:
+
+```{r}
+my_data_without_outliers <- repsout(my_data)
+my_normalized_data <- norm_pd(my_data_without_outliers, 2, 10)
+```
+
+## Plotting data
+
+Once data has been checked for quality and normalized, the last step is to look at the data. *qpcrplotR* can't interpret your results for you. However, it will make some awesome plots to make your job of interpreting the results even easier. To do this, the `plot_pcr` function is used. It plots your data using the R package *ggplot2* in order to give you publication quality graphs.
+
+Let's go ahead and plot our example data now that we have normalized it above:
+
+```{r}
+my_data_plot <- plot_pcr(my_normalized_data, "Sample", "Mean.Copies.ul")
+print(my_data_plot)
+
+```
+
+Now we can see how copy number of the map gene differs between *Sulfitobacter* spp. strains at different stages of growth in batch culture.
+
+## Looking for more?
+
+Curious how you might work with data from other qPCR machines? Go check out some of the other *qpcrplotR* vignettes!

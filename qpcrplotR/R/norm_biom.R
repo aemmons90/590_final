@@ -10,10 +10,10 @@
 #' mean copies per gram of soil; Z is used to define these final units and name the resulting column.
 #' This function should only be used after norm_pd or norm_sd.
 #'
-#' @param df a data frame
-#' @param x a numeric value
-#' @param y a numeric value
-#' @param z a column name; include in quotes
+#' @param df a data frame resulting from either norm_pd() or norm_sd()
+#' @param x a numeric value, equal to elution volume
+#' @param y a numeric value, equal to biomass input
+#' @param z a new column name; include in quotes
 #' @return A data frame including Sample, Mean.Copies, and SD after correcting for total elution volume and biomass input.
 #'
 #' @examples
@@ -23,7 +23,8 @@ norm_biom<- function(df, x=1, y=1, z){
   df[[z]] <- ((df[["Mean.Copies.ul"]]*x)/y)
   df[["Mean.Copies.ul"]]<- NULL
   df[["SD"]] <- ((df[["SD"]]*x)/y)
-  return(df)
+  df2<-df[ ,c(1, 3, 2)]
+  return(df2)
 }
 
 

@@ -7,7 +7,7 @@
 #' This function also normalizes based on the pipette volume (z) per PCR reaction. Therefore, there is no need to use
 #' norm_pd following this function.
 #'
-#' @param df a data frame
+#' @param df a data frame resulting from repsout()
 #' @param x a numeric value
 #' @param y a numeric value
 #' @param z a numeric value
