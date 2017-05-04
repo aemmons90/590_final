@@ -14,15 +14,15 @@ library(qpcrplotR)
 
 ```
 ## Introduction
-This vignette documents how data from a BioRad CFX 96 well instrument may be analyzed by the R package *qpcrplotR*. THe purpose of this vignette is to demonstrate how to load, normalize, and plot data outputted from a BioRad CFX 96 well qPCR machine.
+This vignette documents how data from a BioRad CFX 96 well instrument may be analyzed by the R package *qpcrplotR*. The purpose of this vignette is to demonstrate how to load, normalize, and plot data outputted from a BioRad CFX 96 well qPCR machine.
 
 Most of this information may also be found throughout the R documentation. 
 
 ## Loading data
 
-Given that qPCR machines do not export data in a standard format after a run, the *qpcrplotR* package provides several different load functions depending on what format your data is in. These different load functions all transform your raw data into *qpcrplotR*'s standard format as a dataframe. This is done so that other functions you may want to use for quality control or normalization of your data work as they are intended. It also allows the user to be able to analyze data from different machines using the same workflow.
+The *qpcrplotR* package manages data outputted from three different qPCR machines: 1) the BioRad CFX 96-well instrument, the quantamaster via qPCR machine, and the BioRad2 qPCR instrument. Data from each of these instruments are standardized to a common format, so that the data can be normalized and visualized using a variety of available functions. 
 
-In this vignette we will be working with data from a BioRad CFX 96-well qPCR instrument. The load function for this type of data is `load_bioradcfx()`. The inputed data must be a comma delimited file. The BiorRAd CFX exports files as .xlsx files, so make sure the data is converted to a .csv file prior to using the *qpcrplotR* package.
+This vignette will focus on data from a BioRad CFX 96-well qPCR instrument. The load function for this type of data is `load_bioradcfx()`. The inputed data must be a comma delimited file. The BiorRAd CFX exports files as .xlsx files, so make sure the data is converted to a .csv file prior to using the *qpcrplotR* package.
 
 Here is an example of how data is imported with this function:
 
@@ -33,13 +33,15 @@ quant <- load_bioradcfx("../data/test.csv")
 
 ```
 
-This results in a dataframe that looks like the one below. Sample names, measured copy number, means, and standard deviations have all been imported and converted into a tibble table to increase readability.To perform statistical analysis on your data it is imperative that you use at least three replicates per sample.
+Using the `load_bioradcfx()` function, sample names, measured copy number, means, and standard deviations are all imported and converted into a tibble table to increase readability.To perform statistical analysis on your data it is imperative that you use at least three replicates per sample.
+
+After using the `load_bioradcfx()` function the data should look similar to the following:
 
 ```{r}
 head(quant)
 
 ```
-The data used in this vignette represents bacterial 16S gene abundances that were coextracted from human bone samples. The quantity of each sample is determined based on the standard curve, denoted as samples S1-S5. 
+This data represents bacterial 16S gene abundances that were coextracted from human bone samples. The quantity of each sample is determined based on a standard curve, denoted as samples S1-S5. 
 
 
 ## Data quality control and normalization
@@ -53,16 +55,22 @@ Once data has been loaded using the load function, there are a variety of differ
 |`norm_sd()`   | Normalizes a subset of samples by the dilution factor and the entire set by pipette volume |
 |`norm_biom()` | Normalizes data by extraction elution volume and biomass input |
 
-For our BioRad CFX data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and normalize it by the biomass input. Removing outliers using `repsout()` only requires the dataframe created from our original load function. The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 10-fold. Therefore we will use the values 2 and 10 for these arguments. We do this as follows:
+For our BioRad CFX data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and then normalize the data by inputted pipette volume, the dilution factor, and biomass input. 
+
+Removing outliers using `repsout()` requires the dataframe created from our original load function. Outliers are removed using this function based on any inputed number of standard deviations, which is the second argument required. For example, if the second argumnet is set to 2, then only values within two standard deviations of the mean will be included in the resulting data frame, giving the user control over outlier removal.
+
+The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 10-fold. Therefore we will use the values 2 and 10 for these arguments. We do this as follows:
 
 ```{r}
-quant1 <- repsout(quant)
+quant1 <- repsout(quant, 2)
 quant2 <- norm_pd(quant1, 2, 10)
 ```
+
 If for some reason you did not dilute all samples prior to qPCR, the function `norm_sd()` can be used to normalize only a subset of your samples by the dilution factor. In order for `norm_sd()` to work, a vector of the sample names that were diluted must be created:
 ```{r}
 x<-c('1101-0001|1101-0002|1101-0003')
 ```
+
 This vector will be used as an argument in the function to designate which samples should be normalized by the dilution factor.As you can see the sample names in the example subset are 1101-0001, 1101-0002, and 1101-0003.This function requires an inputed data frame (quant1) that is the result of `repsout()`, a vector (x) containing sample information, and the dilution factor (10). An example is as follows:
 ```{r}
 example<-norm_sd(quant1, x, 10)
