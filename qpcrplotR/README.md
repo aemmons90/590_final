@@ -10,10 +10,9 @@ output and plots data for visualization.
 Installation
 ------------
 
-If you would like to install this package with vignettes,
-
-Use
-`devtools::install_github("aemmons90/590_final/qpcrplotR", buildVignettes = TRUE)`
+If you would like to install this package with vignettes, Use
+`devtools::install_github("aemmons90/590_final/qpcrplotR", build_vignettes = TRUE)`
 may be used to install the package. Otherwise, installation may be
 performed by using
-`devtools::install_github("aemmons90/590_final/qpcrplotR")`.
+`devtools::install_github("aemmons90/590_final/qpcrplotR")` and no
+vignettes will be installed.
