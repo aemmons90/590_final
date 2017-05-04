@@ -11,7 +11,7 @@
 #' @param y a numeric value, equal to the dilution factor
 #' @return A data frame including Sample, Mean.Copies.ul, and SD after correcting for pipette volume and dilutions.
 #' @examples
-#' norm_pd(quant2, 2, 10)
+#' norm_pd(quant1, 2, 10)
 #' @export
 norm_pd <- function(df, x=1, y=1){
   df[["Mean.Copies"]] <- (df[["Mean.Copies"]]/x)*y

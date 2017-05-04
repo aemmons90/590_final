@@ -24,5 +24,5 @@ the default is set to 1 (indicating no dilution). The dilution factor argument s
 modified if only a subset of samples were diluted; instead, use the function norm_sd().
 }
 \examples{
-norm_pd(quant2, 2, 10)
+norm_pd(quant1, 2, 10)
 }
