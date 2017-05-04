@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_biorad2.R
 \name{load_biorad2}
 \alias{load_biorad2}
-\title{load_biorad2}
+\title{Load a qPCR file from a BioRad2 machine}
 \usage{
 load_biorad2(datafile)
 }

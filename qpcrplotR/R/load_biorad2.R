@@ -1,4 +1,4 @@
-#' load_biorad2
+#' Load a qPCR file from a BioRad2 machine
 #'
 #' Imports data from Bio-Rad Opticon qPCR machines that utilize the Bio-Rad Opticon Monitor 3 software. This function only accepts raw data from the program, without any calculations on user-input well sets.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_bioradcfx.R
 \name{load_bioradcfx}
 \alias{load_bioradcfx}
-\title{Load a qPCR file from an BioRad CFX 96 well machine}
+\title{Load a qPCR file from a BioRad CFX 96 well machine}
 \usage{
 load_bioradcfx(file)
 }

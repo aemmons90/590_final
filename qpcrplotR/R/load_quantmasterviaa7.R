@@ -1,13 +1,13 @@
-#' load_quantmasterviia7
-#' 
+#' Load a qPCR file from a QuantMasterViiA7 machine
+#'
 #' Imports raw qPCR data from a QuantMaster Viaa7 Instrument, converts it to a smaller tibble containing Sample Name and Quantity
-#' 
+#'
 #' @param file The qPCR output (.csv) from a QuantMasterViiA7 Instrument
 #' @return Returns a tibble for next step, normalization
-#' 
-#' @examples 
+#'
+#' @examples
 #' load_quantmasterviia7("jenny2_qPCR.csv")
-#' 
+#'
 #' @import tidyverse
 
 

@@ -1,4 +1,4 @@
-#' Load a qPCR file from an BioRad CFX 96 well machine
+#' Load a qPCR file from a BioRad CFX 96 well machine
 #'
 #' This function loads a .csv file as a tibble table. You must first convert your .xlsx file into a .csx file before using. It assumes that the first row of each column
 #' contains the column names and that each row corresponds to a well run. It also assumes that the format of the .csv file has the following column names:
