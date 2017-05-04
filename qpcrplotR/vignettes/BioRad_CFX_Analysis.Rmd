@@ -13,24 +13,27 @@ vignette: >
 library(qpcrplotR)
 
 ```
-This vignette documents how data from a BioRad CFX 96 well instrument may be analyzed by the R package *qpcrplotR*. In this vignette you will learn how to load data output from the qPCR machine, normalize data, and plot your data for visualization.
+## Introduction
+This vignette documents how data from a BioRad CFX 96 well instrument may be analyzed by the R package *qpcrplotR*. THe purpose of this vignette is to demonstrate how to load, normalize, and plot data outputted from a BioRad CFX 96 well qPCR machine.
 
-Most of this information may also be found throughout the R documentation. This vignette merely serves as an example workflow to introduce or refresh users on how to utilize the *qpcrplotR* package and some of its associated functions.
+Most of this information may also be found throughout the R documentation. 
 
 ## Loading data
 
 Given that qPCR machines do not export data in a standard format after a run, the *qpcrplotR* package provides several different load functions depending on what format your data is in. These different load functions all transform your raw data into *qpcrplotR*'s standard format as a dataframe. This is done so that other functions you may want to use for quality control or normalization of your data work as they are intended. It also allows the user to be able to analyze data from different machines using the same workflow.
 
-In this vignette we will be working with data from a BioRad CFX 96-well qPCR instrument. The load function for this type of data is `load_bioradcfx()`.
+In this vignette we will be working with data from a BioRad CFX 96-well qPCR instrument. The load function for this type of data is `load_bioradcfx()`. The inputed data must be a comma delimited file. The BiorRAd CFX exports files as .xlsx files, so make sure the data is converted to a .csv file prior to using the *qpcrplotR* package.
 
 Here is an example of how data is imported with this function:
 
 ```{r}
+library(dplyr)
+library(tidyverse)
 quant <- load_bioradcfx("../data/test.csv")
 
 ```
 
-This results in a dataframe that looks like the one below. Here you can see sample names, measured copy number, means, and standard deviations are all imported.  To perform statistical analysis on your data it is imperative that you use at least three replicates per sample.
+This results in a dataframe that looks like the one below. Sample names, measured copy number, means, and standard deviations have all been imported and converted into a tibble table to increase readability.To perform statistical analysis on your data it is imperative that you use at least three replicates per sample.
 
 ```{r}
 head(quant)
@@ -50,13 +53,12 @@ Once data has been loaded using the load function, there are a variety of differ
 |`norm_sd()`   | Normalizes a subset of samples by the dilution factor and the entire set by pipette volume |
 |`norm_biom()` | Normalizes data by extraction elution volume and biomass input |
 
-For our BioRad CFX data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and normalize it to biomass input. Removing outliers using `repsout()` only requires the dataframe created from our original load function. The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 10-fold. Therefore we will use the values 2 and 10 for these arguments. We do this as follows:
+For our BioRad CFX data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and normalize it by the biomass input. Removing outliers using `repsout()` only requires the dataframe created from our original load function. The `norm_pd()` function will then use the resulting dataframe as its first argument. The two other arguments are user-input depending on how the qPCR assay was run. These two arguments are the pipetted volume of sample and the dilution factor. The example qPCR data in this vignette used 2-$\mu$L of sample and was diluted 10-fold. Therefore we will use the values 2 and 10 for these arguments. We do this as follows:
 
 ```{r}
 quant1 <- repsout(quant)
 quant2 <- norm_pd(quant1, 2, 10)
 ```
-
 If for some reason you did not dilute all samples prior to qPCR, the function `norm_sd()` can be used to normalize only a subset of your samples by the dilution factor. In order for `norm_sd()` to work, a vector of the sample names that were diluted must be created:
 ```{r}
 x<-c('1101-0001|1101-0002|1101-0003')
@@ -66,7 +68,13 @@ This vector will be used as an argument in the function to designate which sampl
 example<-norm_sd(quant1, x, 10)
 ```
 
-After either `norm_pd()` or `norm_sd()` is applied to your data, metadata may be associated with your samples using the `meta_merge()` function. 
+After either `norm_pd()` or `norm_sd()` is applied to your data, you can then use the `norm_biom()` funtion to normalize your data by a biomass input.  For example, if DNA was isolated from 0.25g of bone powder, you may want to determine the abundance of your targeted gene per gram of bone powder. You can use the `norm_biom` function to do this. This function requires the following arguments: a data frame resulting from either `norm_pd()` or `norm_sd()`, the volume of your final extraction (elution) volume, and the mass of the biomass input. An example is as follows:
+```{r}
+quant3<-norm_biom(quant2, 100, 0.25, "Mean.Copies/g")
+```
+
+Finally, metadata may be associated with your samples prior to plotting using the `meta_merge()` function. 
+
 ```{r}
 quant4<-meta_merge("../data/test_metadata.csv", quant3)
 head(quant4)
@@ -75,11 +83,12 @@ As you can see, the resulting data frame (quant4) now includes additional inform
 
 ## Plotting data
 
-Once data has been checked for quality and normalized, the last step is to look at the data. *qpcrplotR* can't interpret your results for you. However, it will provide a preliminary plot of your data, so that you can guage how samples differ and whether certain samples should be requantified.To do this, use the `plot_pcr()` function. It plots your data using the R package *ggplot2* so that you may begin visualizing your data.
+Once data has been checked for quality and normalized, the last step is to look at the data. *qpcrplotR* can't interpret your results for you; however, it will provide a preliminary plot of your data, so that you can guage how samples differ and whether certain samples should be requantified. To do this, use the `plot_pcr()` function. It plots your data using the R package *ggplot2* so that you may begin visualizing your data.
 
 Now that the data is normalized it can be plotted as follows:
 
 ```{r}
+library(ggplot2)
 plot1 <- plot_pcr(quant4, "Sample", "Mean.Copies/g", "Body.region")
 print(plot1)
 
