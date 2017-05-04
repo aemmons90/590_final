@@ -24,7 +24,7 @@
 
 norm_gcopy <- function(df, x=1, y=1, z=1, n=1){
   #Combine the two equations from Ritalahti to get cells/mL
-  df[["Cells/mL"]] <- (((df[["Mean.Copies"]]*x)/(y*z))/n)
+  df[["Cells.mL"]] <- (((df[["Mean.Copies"]]*x)/(y*z))/n)
   df[["Stdev"]] <- (((df[["SD"]]*x)/(y*z))/n)
   #Remove the old columns
   df[["Mean.Copies"]] <- NULL
