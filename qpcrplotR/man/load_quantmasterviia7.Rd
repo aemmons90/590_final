@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_quantmasterviaa7.R
 \name{load_quantmasterviia7}
 \alias{load_quantmasterviia7}
-\title{load_quantmasterviia7}
+\title{Load a qPCR file from a QuantMasterViiA7 machine}
 \usage{
 load_quantmasterviia7(file)
 }
