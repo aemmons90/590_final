@@ -2,20 +2,24 @@
 % Please edit documentation in R/load_quantmasterviaa7.R
 \name{load_quantmasterviia7}
 \alias{load_quantmasterviia7}
-\title{load_quantmasterviia7}
+\title{Import qPCR file from a QuantMaster Viaa7 Instrument and convert to standard format.}
 \usage{
 load_quantmasterviia7(file)
 }
 \arguments{
-\item{file}{The qPCR output (.csv) from a QuantMasterViiA7 Instrument}
+\item{file}{the file path for the .csv file in quotes}
 }
 \value{
-Returns a tibble for next step, normalization
+Returns a tibble with four columns (Sample, Copies, Mean, SD)
 }
 \description{
-Imports raw qPCR data from a QuantMaster Viaa7 Instrument, converts it to a smaller tibble containing Sample Name and Quantity
-}
-\examples{
-load_quantmasterviia7("jenny2_qPCR.csv")
-
+This function loads a .csv file, converts it to a smaller tibble, and
+extracts relevant information (Sample Name, Quantity, Quantity Mean, SD)
+to be exported in a standard format (Sample, Copies, Mean, SD). The input
+file must be in .csv format and assumes i) the header is on the 33rd line,
+ii) the column names include Well, Well Position, Sample Name, Target Name,
+Task, Reporter, Quencher, CT, Ct Mean, Ct SD, Quantity, Quantity Mean,
+Quantity SD, Automatic Ct Threshold, Ct Threshold, Automatic Baseline,
+Baseline Start, Baseline End, Custom 1-5, HIGHSD, NOAMP, EXPFAIL.  Also,
+it is important that replicates have the same sample names.
 }
