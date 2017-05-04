@@ -10,7 +10,7 @@
 #' @param the file Path in quotes
 #' @return A tibble table of the input file. This inlcudes columns with the sample designation, starting quantity (copy number), mean, and standard deviation.
 #' @example
-#' load_bioradcfx("./data/test.csv")
+#' load_bioradcfx("../data/test.csv")
 #' @export
 load_bioradcfx <- function(file){
   raw_data<- read.csv(file, header=TRUE, check.names = TRUE)
