@@ -1,29 +1,49 @@
-#' Load a qPCR file from a QuantMasterViiA7 machine
+#' Import qPCR file from a QuantMaster Viaa7 Instrument and convert to standard format.
 #'
-#' Imports raw qPCR data from a QuantMaster Viaa7 Instrument, converts it to a smaller tibble containing Sample Name and Quantity
+#' This function loads a .csv file, converts it to a smaller tibble, and
+#' extracts relevant information (Sample Name, Quantity, Quantity Mean, SD)
+#' to be exported in a standard format (Sample, Copies, Mean, SD). The input
+#' file must be in .csv format and assumes i) the header is on the 33rd line,
+#' ii) the column names include Well, Well Position, Sample Name, Target Name,
+#' Task, Reporter, Quencher, CT, Ct Mean, Ct SD, Quantity, Quantity Mean,
+#' Quantity SD, Automatic Ct Threshold, Ct Threshold, Automatic Baseline,
+#' Baseline Start, Baseline End, Custom 1-5, HIGHSD, NOAMP, EXPFAIL.  Also,
+#' it is important that replicates have the same sample names.
 #'
-#' @param file The qPCR output (.csv) from a QuantMasterViiA7 Instrument
-#' @return Returns a tibble for next step, normalization
 #'
-#' @examples
-#' load_quantmasterviia7("jenny2_qPCR.csv")
+#' @param file the file path for the .csv file in quotes
+#' @return Returns a tibble with four columns (Sample, Copies, Mean, SD)
 #'
-#' @import tidyverse
-
-
-
+#' @example
+#' load_quantmasterviia7("./data/quantmasterviaa7/Jenny2_qPCR.csv")
+#'
 #' @export
+
+
 #Takes the qPCR output (.csv) from a QuantMasterViiA7 qPCR machine.
 #Sample data should be labeled UNKNOWN under Task columns, and replicates should have the same identity under `Sample Name`
 load_quantmasterviia7 <- function(file){
-  #Reads file, skips to the row containing the header (Well, Well Position, ....)
-  Rawfile <- read.csv(file, skip = 32, check.names = FALSE)
+  #Reads file, skips to the row containing the header, and removes spaces
+  Rawfile <- read.csv(file, skip = 32, 
+                      check.names = TRUE, 
+                      na.strings = c("","NA"))
+
   #Converts the dataframe to a tibble and selects important columns
-  Newfile <- tibble::as_tibble(select(Rawfile, `Sample Name`, Task, Quantity)) %>%
-    #Removes rows containing standards, blanks, etc. leaving only the UNKNOWN samples
-    dplyr::filter(Task == "UNKNOWN") %>%
-    dplyr::select(`Sample Name`, Quantity)
-  return(Newfile)
+  Newfile <- tibble::as_tibble(select(Rawfile, Sample.Name, Task, Quantity, Quantity.Mean, Quantity.SD)) %>%
+    #Extracts the rows containing sample data
+    filter(Task == "UNKNOWN") %>%
+    filter(!is.na(Quantity.Mean)) %>%
+    #Selects the columns of interest in the sample data
+    select(Sample.Name, Quantity, Quantity.Mean, Quantity.SD)
+  
+  #Re-name columns in standard output
+  colnames(Newfile) <- c("Sample", "Copies","Mean","SD")
+  
+  #Convert factor classes to numeric for algebraic downstream functions
+  Newfile$Copies <- as.numeric(gsub(",","", Newfile$Copies))
+  Newfile$Mean <- as.numeric(gsub(",","", Newfile$Mean))
+  Newfile$SD <- as.numeric(gsub(",","", Newfile$SD))
+return(Newfile)
 }
 
 
