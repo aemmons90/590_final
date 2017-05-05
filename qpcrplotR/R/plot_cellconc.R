@@ -8,7 +8,7 @@
 #' @param b title for x axis in quotes, default is Time(hrs) if not defined
 #' @return A plot of cell concentration versus time, faceted by organism
 #' 
-#' @example plot_cellconc(ProcessedData, "Graph Title", "Time(days)")
+#' @example plot_cellconc(ProcessedData, "Graph.Title", "Time(days)")
 #' 
 #' @export
 

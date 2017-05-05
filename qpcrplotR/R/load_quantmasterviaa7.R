@@ -15,7 +15,7 @@
 #' @return Returns a tibble with four columns (Sample, Copies, Mean, SD)
 #'
 #' @example
-#' load_quantmasterviia7("./data/quantmasterviaa7/Jenny2_qPCR.csv")
+#' load_quantmasterviia7("./data/test_viia7.csv")
 #'
 #' @export
 
