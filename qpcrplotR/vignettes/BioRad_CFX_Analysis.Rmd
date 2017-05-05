@@ -20,7 +20,7 @@ Most of this information may also be found throughout the R documentation.
 
 ## Loading data
 
-The *qpcrplotR* package manages data outputted from three different qPCR machines: 1) the BioRad CFX 96-well instrument, the quantamaster via qPCR machine, and the BioRad2 qPCR instrument. Data from each of these instruments are standardized to a common format, so that the data can be normalized and visualized using a variety of available functions. 
+The *qpcrplotR* package manages data outputted from three different qPCR machines: 1) the BioRad CFX 96-well instrument, the quantamaster via qPCR machine, and the BioRad2 qPCR instrument. *qpcrplotR* takes data from each of these instruments and standardizes them to a common format, so that the data can be normalized and visualized using a variety of available functions. 
 
 This vignette will focus on data from a BioRad CFX 96-well qPCR instrument. The load function for this type of data is `load_bioradcfx()`. The inputed data must be a comma delimited file. The BiorRAd CFX exports files as .xlsx files, so make sure the data is converted to a .csv file prior to using the *qpcrplotR* package.
 
