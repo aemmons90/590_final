@@ -1,0 +1,91 @@
+---
+title: "Working with Data from a QuantaMaster Viia7"
+author: "Samantha Coy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BioRad_CFX_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(qpcrplotR)
+
+```
+## Introduction
+This vignette documents how data from a QuantaMaster Viia7 96 well instrument may be analyzed by the R package *qpcrplotR*. The purpose of this vignette is to demonstrate how to load, normalize, and plot data outputted from a QuantaMaster Viia7 Insturment.  The pipeline here specifically demonstrates how to plot cell concentration (cells/mL) from 16SrRNA qPCR data, but in all actuality, the data can be manipulated using any normalization and plotting function within *qpcrplotR* after using the load function for QuantaMaster instruments.
+
+Most of this information may also be found throughout the R documentation. 
+
+## Loading data
+
+To date, the *qpcrplotR* package processes data output from three different qPCR machines: i) the BioRad CFX 96-well instrument, ii) the QuantaMaster Viia7 qPCR machine, and iii) the BioRad2 qPCR instrument. Data from each of these instruments are standardized to a common format, so that the data can be normalized and visualized using any of the remaining available functions. 
+
+This vignette will focus on processing QuantaMasterViia7 data to obtain cell concentration data (cells/mL). The load function for this type of data is `load_quantmasterviia7()`. The inputed data must be a comma delimited file, and sample names must be identical between replicates. The QuantaMaster machine exports files as .xlsx files, so make sure the data is converted to a .csv file prior to using the *qpcrplotR* package.
+
+Here is an example of how data is imported with this function:
+
+```{r}
+library(dplyr)
+library(tidyverse)
+Infile <- load_quantmasterviia7("../data/test_viia7.csv")
+
+```
+
+Using the `load_quantmasterviia7()` function, Sample Name, Quantity, Quantity Mean, and Quantity SD are all imported and converted into a tibble table to increase readability. To perform statistical analysis on your data it is imperative that you use at least three replicates per sample.
+
+After using the `load_quantmasterviia7()` function the data should look similar to the following:
+
+```{r}
+head(Infile)
+
+```
+This data represents bacterial 16S rRNA gene abundances that were extracted from lab cultures.  There are two bacterial candidates that will be used in an experiment involving uranium bioremediation, but the authors must establish growth curves for each bacterium growing without Uranium first.
+
+## Data quality control and normalization
+
+Once data has been loaded using the load function, there are a variety of different functions that may be used for data quality control and normalization of data. Here is a table of the functions for the cell concentration pipeline:
+
+| Function     | Description |
+|:------------:|:------------|
+|`repsout()`   | Removes outliers from dataset |
+|`norm_gcopy()`   | Normalizes data using a method by Ritalahti et al. 2006 in AEM to obtain cell concentration  |
+
+For our Quantamaster data we will use the `repsout()` and `norm_gcopy()` functions so that we can first remove any outliers from the data and then normalize the data by the method in Ritalahti et al. 2006.  This method includes:
+i) Gene Copies per mL = ((gene copies per reaction mix) x (volume of DNA[ul]) / (3 ul DNA per reaction mix) x (ml sample used))
+ii) Cells per mL = Gene Copies per mL / Gene Copies per Genome
+
+
+Removing outliers using `repsout()` requires the dataframe created from our original load function. Outliers are removed using this function based on any inputed number of standard deviations, which is the second argument required. For example, if the second argumnet is set to 2, then only values within two standard deviations of the mean will be included in the resulting data frame, giving the user control over outlier removal.
+
+The `norm_gcopy()` function will then use the resulting dataframe as its first argument. The four other arguments are user-input. These four arguments are i) the elution volume of the extracted DNA in microliters, ii) template volume of DNA in the PCR reaction in microliters, iii) sample volume subjected to DNA extraction in milliliters, and iv) number of 16SrRNA gene copies in the genome. The example qPCR data in this vignette used a 50-$\mu$L elution volume, 2-$\mu$L template volume, 1.8mL sample volume that was extracted, and 2 16S gene copies contained by the organism. Therefore we will use the values 50, 2, 1.8, and 2 for these arguments. We do this as follows:
+
+```{r}
+InfileOUT <- repsout(Infile, 2)
+ProcessedInfile <- norm_gcopy(InfileOUT, 50, 2, 1.8, 2)
+```
+
+Finally, metadata may be associated with your samples prior to plotting using the `meta_merge()` function. 
+
+```{r}
+ProcessedData<-meta_merge("../data/test_metadata_cellconc.csv", ProcessedInfile)
+head(ProcessedData)
+```
+
+As you can see, the resulting data frame (ProcessedData) now includes additional information including the Organism and Time, the latter of which is unitless until you specify units (e.g. hours) in the plot function.
+
+## Plotting data
+
+Once data has been checked for quality and normalized, the last step is to look at the data. *qpcrplotR* can plot a simple growth curve of your data.  To do this, use the `plot_cellconc()` function. It plots your data using the R package *ggplot2* so that you may begin visualizing your data.   This function can take two arguments--one being optional.  The first argument is the title you wish to set in quotes.  The second is an optional argument to set the x-axis title in quotes.  By default, the x-axis title is "Time (hrs)", but you can specify whether the units are something else here. 
+
+Now that the data is normalized it can be plotted as follows:
+
+```{r}
+library(ggplot2)
+ProcessedDataPlot <- plot_cellconc(ProcessedData, "Bacterial Candidates for Uranium Bioremediation", "Time (days)")
+print(ProcessedDataPlot)
+
+```
+
+To see how these functions can be applied to other types of qPCR data, checkout more of the vignettes associated with *qpcrplotR*.
