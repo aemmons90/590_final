@@ -3,7 +3,7 @@ Title: Normalizes and Plots qPCR Data
 Version: 0.0.0.9000
 Authors@R: c(person("Alexandra", "Emmons", email = "aemmons@vols.utk.edu", role = c("aut", "cre")),
 	person("Matthew", "Tuttle", email = "mtuttle4@vols.utk.edu", role = c("aut")),
-	person("First", "Last", email = "first.last@example.com", role = c("aut")))
+	person("Samantha", "Coy", email = "srose16@vols.utk.edu", role = c("aut")))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.3.2)
 License: CC0
