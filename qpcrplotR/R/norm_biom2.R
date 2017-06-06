@@ -20,7 +20,7 @@
 #' @export
 
 #This function takes 4 arguments, the first being the dataframe and the last three as columns
-norm_biom_2 <- function(df, x, y, z){
+norm_biom2 <- function(df, x, y, z){
 
   #argument x is the final elution volume
   df[["Mean.Copies.ul"]] <- (df[["Mean.Copies.ul"]]*x)

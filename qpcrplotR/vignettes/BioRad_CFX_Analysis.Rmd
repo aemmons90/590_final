@@ -54,6 +54,7 @@ Once data has been loaded using the load function, there are a variety of differ
 |`norm_pd()`   | Normalizes data by Pipette volume and dilution factor |
 |`norm_sd()`   | Normalizes a subset of samples by the dilution factor and the entire set by pipette volume |
 |`norm_biom()` | Normalizes data by extraction elution volume and biomass input |
+|`norm_biom2()`| Normalizes data by extraction elution volume and biomass input |
 
 For our BioRad CFX data we will use the `repsout()` and `norm_pd()` functions so that we can first remove any outliers from the data and then normalize the data by inputted pipette volume, the dilution factor, and biomass input. 
 
@@ -93,7 +94,7 @@ As you can see, the resulting data frame (quant4) now includes additional inform
 ALTERNATIVELY, `meta_merge` may be used following `norm_pd` or `norm_sd` and the function `norm_biom2`may instead be used to normalize your data by biomass input. This function is useful if the initial biomass input differs by samples, meaning exact masses were taken for each sample prior to extraction. 
 ```{r}
 quant5<-meta_merge("../data/test_metadata.csv", quant2)
-norm_biom(quant5, 100, "Mean.Copies.gdw", "Soil.dw.")
+norm_biom2(quant5, 100, "Mean.Copies/gdw", "Soil.dw.")
 ```
 
 ## Plotting data
