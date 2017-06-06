@@ -1,7 +1,7 @@
 Sample,"Agency
-ID",Body region,Human DNA,PicoGreen Total DNA content (ng/ul)
-1101-0001,A,upper trunk,108.7301587,62.83579197
-1101-0002,A,upper trunk,79.5,74.69107744
-1101-0003,A,lower trunk,35.31746032,43.9550684
-1101-0004,A,upper trunk,78.62745098,77.96072131
-1101-0005,A,upper trunk,42.57575758,15.31289768
+ID",Body region,Human DNA,PicoGreen Total DNA content (ng/ul),Soil dw%
+1101-0001,A,upper trunk,108.7301587,62.83579197,0.79
+1101-0002,A,upper trunk,79.5,74.69107744,0.82
+1101-0003,A,lower trunk,35.31746032,43.9550684,0.56
+1101-0004,A,upper trunk,78.62745098,77.96072131,0.65
+1101-0005,A,upper trunk,42.57575758,15.31289768,0.75

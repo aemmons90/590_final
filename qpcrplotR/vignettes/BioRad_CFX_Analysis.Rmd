@@ -89,6 +89,13 @@ head(quant4)
 ```
 As you can see, the resulting data frame (quant4) now includes additional information including the Agency.Id, referring to the biological replicate ID, the Body.region that was sampled, and the Human.DNA quantity associated with that region. 
 
+
+ALTERNATIVELY, `meta_merge` may be used following `norm_pd` or `norm_sd` and the function `norm_biom2`may instead be used to normalize your data by biomass input. This function is useful if the initial biomass input differs by samples, meaning exact masses were taken for each sample prior to extraction. 
+```{r}
+quant5<-meta_merge("../data/test_metadata.csv", quant2)
+norm_biom(quant5, 100, "Mean.Copies.gdw", "Soil.dw.")
+```
+
 ## Plotting data
 
 Once data has been checked for quality and normalized, the last step is to look at the data. *qpcrplotR* can't interpret your results for you; however, it will provide a preliminary plot of your data, so that you can guage how samples differ and whether certain samples should be requantified. To do this, use the `plot_pcr()` function. It plots your data using the R package *ggplot2* so that you may begin visualizing your data.
